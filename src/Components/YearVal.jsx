@@ -9,7 +9,7 @@ const YearVal = ({ setEnteredval, enteredval, handleChange, submit, deleteHandle
                 <TextField id="eval" name='val' onChange={handleChange} type={"number"} label="Rainfall value in mm" variant="standard" />
             </div>
             <div style={{ margin: "20px auto", display: "flex", justifyContent: "space-evenly", width: "500px" }}>
-                <Button variant="contained" onClick={submit} color="success">  Submit
+                <Button variant="contained" onClick={submit} color="success">  Add
                 </Button>
                 {/* <Button variant="contained" onClick={generateReport} color="error">  Generate Report
                 </Button> */}

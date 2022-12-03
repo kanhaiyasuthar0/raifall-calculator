@@ -6,11 +6,13 @@ import "../src/Components/common.css"
 import { useState } from 'react';
 import Result from './Components/Result';
 import UserDetails from './Components/UserDetails';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useNavigation } from "react-router-dom";
 import CustomizedSteppers from './Components/Progress';
 import HorizontalLinearStepper from './Components/Progress';
 
 function App() {
+  const [finalReport, setReport] = useState([])
+  const navigate = useNavigate()
   const [enteredval, setEnteredval] = useState([])
   const [noYear, setnoYear] = useState(0)
   const [noArea, setArea] = useState(0)
@@ -38,11 +40,13 @@ function App() {
     console.log(arr)
     setEnteredval([...arr])
   }
-  const handleGenerate = () => {
-
+  const generateReport = () => {
+    if (enteredval && noArea && noYear && type) {
+      navigate("/report")
+    }
   }
   const check = (value) => {
-
+    console.log(value)
     for (let i = 0; i < StrengthTable.length; i++) {
       if (+value == [((i + 1) * 20)]) {
         console.log(StrengthTable[i][value], "VALUE")
@@ -73,23 +77,24 @@ function App() {
     let l2 = c2 - "x"
     // console.log(upper, lower, u2, l2)
     let v1 = lower / upper * u2
-    return c2 - v1
+    return (c2 - v1).toFixed(4)
   }
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
+      {/* <BrowserRouter> */}
+      <Routes>
 
-          <Route path="/report" element={<Result check={check} noYear={noYear} enteredval={enteredval} />} />
-          <Route path="/" element={<HorizontalLinearStepper setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
-          <Route path="/inputs" element={<InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
-          <Route path="/inputs" element={<InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
-          {/* <Route path="/report" element={<Result check={check} noYear={noYear} enteredval={enteredval} />} /> */}
-        </Routes>
+        <Route path="/report" element={<Result finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} />
+        <Route path="/" element={<HorizontalLinearStepper generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
+        <Route path="/" element={<HorizontalLinearStepper generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
+        {/* <Route path="/inputs" element={<InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} /> */}
+        {/* <Route path="/inputs" element={<InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} /> */}
+        {/* <Route path="/report" element={<Result check={check} noYear={noYear} enteredval={enteredval} />} /> */}
+      </Routes>
 
+      <TableData setStrtable={setStrtable} interpolar={interpolar} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} />
 
-        {/* <TableData setStrtable={setStrtable} interpolar={interpolar} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} /> */}
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
 
     </div>
   );

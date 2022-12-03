@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import UserDetails from './UserDetails';
 import YearVal from './YearVal';
 import InputData from './InputData';
-
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 const steps = ['Please fill your data', 'Add rain fall data', 'Generate report'];
 
 export default function HorizontalLinearStepper({ setEnteredval, enteredval, handleChange, submit, deleteHandle, generateReport, setnoYear, setArea, setType }) {
@@ -76,7 +76,7 @@ export default function HorizontalLinearStepper({ setEnteredval, enteredval, han
                     );
                 })}
             </Stepper>
-            {activeStep == 0 ? <UserDetails /> : activeStep == 1 ? < YearVal setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : activeStep == 2 ? <InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : ""}
+            {activeStep == 0 ? <UserDetails /> : activeStep == 1 ? < YearVal setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : activeStep == 2 ? <InputData generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : ""}
             {activeStep === steps.length ? (
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
@@ -118,15 +118,17 @@ export default function HorizontalLinearStepper({ setEnteredval, enteredval, han
                                     <th>Sr</th>
                                     <th>Year</th>
                                     <th>Monsoon Rainfall in mm</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {enteredval?.map((item, index) => {
                                     // console.log(item)
-                                    return (<tr onClick={() => deleteHandle(item)}>
+                                    return (<tr>
                                         <td>{index + 1}</td>
                                         <td>{item.year}</td>
-                                        <td>{item.val}</td>
+                                        <td>{item.val}  </td>
+                                        <td onClick={() => deleteHandle(item)}><DeleteForeverOutlinedIcon style={{ color: "red", }} /> </td>
                                     </tr>)
                                 })}
                             </tbody>
