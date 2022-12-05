@@ -58,7 +58,7 @@ const ValueEnterPlace = () => {
                 <div style={{ margin: "20px auto", display: "flex", justifyContent: "space-evenly", width: "500px" }}>
                     <Button type='' variant="contained" onClick={submit} color="success">  Add
                     </Button>
-                    <Button variant="contained" disabled={userData.no_of_year == allRainfallData.length ? false : true} onClick={saveit} color="error">  Save to cloud
+                    <Button variant="contained" disabled={userData?.no_of_year == allRainfallData.length ? false : true} onClick={saveit} color="error">  Save to cloud
                     </Button>
                 </div>
             </form>
