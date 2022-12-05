@@ -48,3 +48,7 @@
 .offcanvas {
     width: 50% !important;
 }
+
+table {
+    overflow: scroll !important;
+}

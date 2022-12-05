@@ -11,7 +11,7 @@ import InputData from './InputData';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 const steps = ['Please fill your data', 'Add rain fall data', 'Generate report'];
 
-export default function HorizontalLinearStepper({ setEnteredval, enteredval, handleChange, submit, deleteHandle, generateReport, setnoYear, setArea, setType }) {
+export default function HorizontalLinearStepper({ sendDataToBackend, setEnteredval, handleDepend, handleUserData, enteredval, handleChange, submit, deleteHandle, generateReport, setnoYear, setArea, setType }) {
     enteredval = enteredval.sort((a, b) => a.year - b.year)
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
@@ -58,6 +58,9 @@ export default function HorizontalLinearStepper({ setEnteredval, enteredval, han
         setActiveStep(0);
     };
     console.log(activeStep)
+    React.useEffect(() => {
+
+    }, [enteredval])
 
     return (
         <Box sx={{ width: '70%', margin: "25px auto" }}>
@@ -76,7 +79,7 @@ export default function HorizontalLinearStepper({ setEnteredval, enteredval, han
                     );
                 })}
             </Stepper>
-            {activeStep == 0 ? <UserDetails /> : activeStep == 1 ? < YearVal setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : activeStep == 2 ? <InputData generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : ""}
+            {activeStep == 0 ? <UserDetails handleUserData={handleUserData} /> : activeStep == 1 ? < YearVal sendDataToBackend={sendDataToBackend} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : activeStep == 2 ? <InputData handleDepend={handleDepend} generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} /> : ""}
             {activeStep === steps.length ? (
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
@@ -121,10 +124,10 @@ export default function HorizontalLinearStepper({ setEnteredval, enteredval, han
                                     <th>Delete</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style={{ overflowY: "scroll" }}>
                                 {enteredval?.map((item, index) => {
                                     // console.log(item)
-                                    return (<tr>
+                                    return (<tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.year}</td>
                                         <td>{item.val}  </td>
@@ -133,6 +136,7 @@ export default function HorizontalLinearStepper({ setEnteredval, enteredval, han
                                 })}
                             </tbody>
                         </table> : ""}
+
                 </div>
             }
         </Box>

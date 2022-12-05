@@ -3,13 +3,20 @@ import './App.css';
 import InputData from './Components/InputData';
 import TableData from './Components/TableData';
 import "../src/Components/common.css"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Result from './Components/Result';
 import UserDetails from './Components/UserDetails';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useNavigation } from "react-router-dom";
 import CustomizedSteppers from './Components/Progress';
 import HorizontalLinearStepper from './Components/Progress';
-
+import axios from "axios"
+import AllRainData from './Components/AllRainData';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './Components/Dashboard';
+import Header from './Components/Navbar';
+import ProjectData from './Components/ProjectData';
+import ValueEnterPlace from './Components/ValueEnterPlace';
+import FinalReport from './Components/FinalReport';
 function App() {
   const [finalReport, setReport] = useState([])
   const navigate = useNavigate()
@@ -18,14 +25,34 @@ function App() {
   const [noArea, setArea] = useState(0)
   const [type, setType] = useState(1)
   const [runOff, setRunOff] = useState(0)
+  const [depend, setDepend] = useState({
+    "50": "",
+    "75": "",
+    "90": ""
+  })
   const [StrengthTable, setStrtable] = useState([])
+  const [userData, setUserData] = useState({
+    uname: "",
+    pname: "",
+    plocation: ""
+  })
   const [eachval, setEachVal] = useState({
     year: "",
     val: ""
   })
+  const handleUserData = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value
+    })
+  }
   const handleChange = (e) => {
     console.log()
     setEachVal({ ...eachval, [e.target.name]: e.target.value })
+  }
+  const handleDepend = (e) => {
+    // console.log(e.target.checked, [e.target.name])
+    setDepend({ ...depend, [e.target.name]: e.target.value })
   }
   const submit = () => {
     console.log(eachval)
@@ -58,8 +85,32 @@ function App() {
           return (StrengthTable[i][value].bad)
         }
       } else if (+value > [((i + 1) * 20)] && +value < [((i + 2) * 20)]) {
+        console.log(StrengthTable[i], StrengthTable[i + 1])
         return interpolar(value, StrengthTable[i], StrengthTable[i + 1])
       }
+    }
+  }
+
+  const sendDataToBackend = async () => {
+    let data = {};
+    data["name"] = userData.uname
+    let arr = []
+    for (let i = 0; i < enteredval.length; i++) {
+      let obj = {};
+      obj["year"] = enteredval[i].year
+      obj["rainfall"] = enteredval[i].val
+      arr.push(obj)
+    }
+    data["data"] = arr
+    console.log(data)
+    try {
+      let res = await axios.post(`https://rainfall.onrender.com/newRain`, data)
+      // let res2 = await res.json();
+
+      console.log(res)
+
+    } catch (error) {
+
     }
   }
 
@@ -79,17 +130,25 @@ function App() {
     let v1 = lower / upper * u2
     return (c2 - v1).toFixed(4)
   }
+  useEffect(() => {
+
+  }, [enteredval])
   return (
     <div className="App">
       {/* <BrowserRouter> */}
+      <Header />
       <Routes>
 
-        <Route path="/report" element={<Result finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} />
-        <Route path="/" element={<HorizontalLinearStepper generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
-        <Route path="/" element={<HorizontalLinearStepper generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
-        {/* <Route path="/inputs" element={<InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} /> */}
-        {/* <Route path="/inputs" element={<InputData setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} /> */}
-        {/* <Route path="/report" element={<Result check={check} noYear={noYear} enteredval={enteredval} />} /> */}
+        <Route path="/report" element={<Result type={type} depend={depend} handleDepend={handleDepend} userData={userData} noArea={noArea} finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} />
+        <Route path="/allData" element={<AllRainData setEnteredval={setEnteredval} depend={depend} handleDepend={handleDepend} userData={userData} noArea={noArea} finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} />
+        {/* <Route path="/" element={<HorizontalLinearStepper sendDataToBackend={sendDataToBackend} handleDepend={handleDepend} handleUserData={handleUserData} generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} /> */}
+        {/* <Route path="/" element={<HorizontalLinearStepper sendDataToBackend={sendDataToBackend} handleDepend={handleDepend} handleUserData={handleUserData} generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} /> */}
+        <Route path="/dashboard" element={<Dashboard sendDataToBackend={sendDataToBackend} handleDepend={handleDepend} handleUserData={handleUserData} generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
+
+        <Route path="/" element={<ProjectData type={type} depend={depend} handleDepend={handleDepend} userData={userData} noArea={noArea} finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} />
+        <Route path="/projectData" element={<ProjectData type={type} depend={depend} handleDepend={handleDepend} userData={userData} noArea={noArea} finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} />
+        <Route path="/rainfallValue" element={<ValueEnterPlace sendDataToBackend={sendDataToBackend} handleDepend={handleDepend} handleUserData={handleUserData} generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
+        <Route path="/generateReport" element={<FinalReport sendDataToBackend={sendDataToBackend} handleDepend={handleDepend} handleUserData={handleUserData} generateReport={generateReport} setType={setType} setArea={setArea} setnoYear={setnoYear} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} deleteHandle={deleteHandle} />} />
       </Routes>
 
       <TableData setStrtable={setStrtable} interpolar={interpolar} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} />

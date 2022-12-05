@@ -5,7 +5,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Button, Checkbox, TextField } from '@mui/material';
-const InputData = ({ setEnteredval, enteredval, handleChange, submit, deleteHandle, generateReport, setnoYear, setArea, setType }) => {
+const InputData = ({ setEnteredval, handleDepend, enteredval, handleChange, submit, deleteHandle, generateReport, setnoYear, setArea, setType }) => {
     console.log(enteredval)
     enteredval = enteredval.sort((a, b) => a.year - b.year)
     useEffect(() => {
@@ -28,7 +28,7 @@ const InputData = ({ setEnteredval, enteredval, handleChange, submit, deleteHand
                 </RadioGroup>
                 <div className='inputareayear'>
 
-                    <TextField onChange={(e) => setArea(e.target.value)} className='area' type={"number"} id="area" label="Area" variant="standard" />
+                    <TextField onChange={(e) => setArea(e.target.value)} className='area' type={"number"} id="area" label="Area in hectre" variant="standard" placeholder />
                     <TextField onChange={(e) => setnoYear(e.target.value)} className='year' type={"number"} id="year" label="Total No. of years for which rainfall data is available" variant="standard" />
                 </div>
             </div>
@@ -41,18 +41,24 @@ const InputData = ({ setEnteredval, enteredval, handleChange, submit, deleteHand
                     control={<Checkbox />}
                     label="90%"
                     labelPlacement="top"
+                    onChange={handleDepend}
+                    name="90"
                 />
                 <FormControlLabel
                     value="top"
                     control={<Checkbox />}
                     label="75%"
                     labelPlacement="top"
+                    onChange={handleDepend}
+                    name="75"
                 />
                 <FormControlLabel
                     value="top"
                     control={<Checkbox />}
                     label="50%"
                     labelPlacement="top"
+                    onChange={handleDepend}
+                    name="50"
                 />
             </div>
 

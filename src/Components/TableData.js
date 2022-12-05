@@ -314,16 +314,17 @@ const TableData = ({ setStrtable }) => {
     }
     // console.log(arr2)
     let strengthTable = [...arr1, ...arr2]
+    localStorage.setItem("strengthTable", JSON.stringify(strengthTable))
     useState(() => {
         setStrtable([...strengthTable])
     }, [])
     return (
         <div>
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Strength table</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Strange table</button>
 
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasRightLabel">Strength table</h5>
+                    <h5 class="offcanvas-title" id="offcanvasRightLabel">Strange table</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
