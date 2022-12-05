@@ -10,6 +10,8 @@ import YearVal from './YearVal'
 
 
 const ValueEnterPlace = () => {
+    let userData = JSON.parse(localStorage.getItem("userData"))
+
     const [year, setYear] = useState("")
     const [rainfall, setRainfall] = useState("")
     const [auto, setAuto] = useState(false)
@@ -38,6 +40,10 @@ const ValueEnterPlace = () => {
         localStorage.setItem("rainfall", JSON.stringify(allRainfallData));
         navigate("/generateReport")
     }
+    const handleDelete = (item) => {
+        let filtered = allRainfallData.filter((each) => each.year != item.year);
+        setAllRainfallData([...filtered])
+    }
     useEffect(() => {
 
     }, [])
@@ -52,7 +58,7 @@ const ValueEnterPlace = () => {
                 <div style={{ margin: "20px auto", display: "flex", justifyContent: "space-evenly", width: "500px" }}>
                     <Button type='' variant="contained" onClick={submit} color="success">  Add
                     </Button>
-                    <Button variant="contained" onClick={saveit} color="error">  Save to cloud
+                    <Button variant="contained" disabled={userData.no_of_year == allRainfallData.length ? false : true} onClick={saveit} color="error">  Save to cloud
                     </Button>
                 </div>
             </form>
@@ -60,7 +66,7 @@ const ValueEnterPlace = () => {
 
             <div style={{ margin: "auto", width: "fit-content" }}>
 
-                {allRainfallData.length > 0 ? <TableForUse data={allRainfallData} /> : ""}
+                {allRainfallData.length > 0 ? <TableForUse data={allRainfallData} handleDelete={handleDelete} /> : ""}
             </div>
 
         </div>
