@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { check } from './common'
 import axios from "axios"
 import xlsx from "json-as-xlsx"
-import { Switch } from '@mui/material'
-import { Button } from 'bootstrap'
+import { Button, Switch } from '@mui/material'
+
 
 const FinalReport = ({ enteredval }) => {
     let rainfall = JSON.parse(localStorage.getItem("rainfall"))
@@ -164,7 +164,7 @@ const FinalReport = ({ enteredval }) => {
             <div>
                 {/* <Header /> */}
                 <div>
-                    {/* <Switch onChange={handleHide} /> */}
+                    <Switch onChange={handleHide} />
                     <h1>Results of Yield Analysis using Strange Table</h1>
                     {/* <div style={{ display: "flex", width: "500px", margin: "auto" }}>
                     <div>Report By - </div>
