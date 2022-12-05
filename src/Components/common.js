@@ -7,11 +7,12 @@ let type = userData ? userData.type : ""
 export const check = (value) => {
     console.log(value, "VALLLUE", typeof value)
     value = +value
+    console.log(StrengthTable)
     for (let i = 0; i < StrengthTable.length; i++) {
         console.log(StrengthTable, "STRENGTHTABEL")
         if (+value == [((i + 1) * 20)]) {
             console.log(StrengthTable[i][value], "VALUE")
-            if (userData.type == 1) {
+            if (type == 1) {
                 return (StrengthTable[i][value].good)
             } else if (type == 2) {
                 return (StrengthTable[i][value].average)
