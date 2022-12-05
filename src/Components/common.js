@@ -1,7 +1,7 @@
 let StrengthTable = JSON.parse(localStorage.getItem("strengthTable"))
 let rainfall = JSON.parse(localStorage.getItem("rainfall"))
 let userData = JSON.parse(localStorage.getItem("userData"))
-let { type } = userData
+let type = userData ? userData.type : ""
 
 //checking strange table
 export const check = (value) => {
@@ -19,6 +19,7 @@ export const check = (value) => {
                 return (StrengthTable[i][value].bad)
             }
         } else if (+value > [((i + 1) * 20)] && +value < [((i + 2) * 20)]) {
+
             console.log(StrengthTable[i], StrengthTable[i + 1])
             let item1 = StrengthTable[i]
             let item2 = StrengthTable[i + 1]
