@@ -186,7 +186,7 @@ const FinalReport = ({ enteredval }) => {
 
                             <tr>
                                 <td style={{ border: "1px solid" }}>Area  </td>
-                                <td style={{ border: "1px solid" }}>{+userData.area * +userData.unit} Hectre</td>
+                                <td style={{ border: "1px solid" }}>{+userData.area * +userData.unit} Sq.m</td>
                             </tr>
                             <tr>
                                 <td style={{ border: "1px solid" }}>Type of Catchment</td>
