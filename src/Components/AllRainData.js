@@ -133,6 +133,7 @@ const AllRainData = ({ setRainDataToEdit }) => {
                             <th style={{ border: "1px solid", borderRadius: "10px" }}>Project Name</th>
                             <th style={{ border: "1px solid", borderRadius: "10px" }}>User Name</th>
                             <th style={{ border: "1px solid", borderRadius: "10px" }}>Area</th>
+                            <th style={{ border: "1px solid", borderRadius: "10px" }}>No of year's data</th>
                             {/* <th style={{ border: "1px solid", borderRadius: "10px" }}>Dependabilty</th> */}
                             <th style={{ border: "1px solid", borderRadius: "10px" }}>More detail</th>
                         </tr>
@@ -144,7 +145,8 @@ const AllRainData = ({ setRainDataToEdit }) => {
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}>{new Date(item.createdAt).toDateString()}</td>
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.projectname}</td>
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.username}</td>
-                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.area.value * item.area.unit}</td>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.area.value * item.area.unit / 10000} Hectre</td>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.userEntered.length}</td>
                                     {/* <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.dependability[0].}</td> */}
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}><Accordion1 data={item} index={index} handleEdit={handleEdit} handleGraph={handleGraph} /></td>
                                     {/* <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.catchment}</td> */}
