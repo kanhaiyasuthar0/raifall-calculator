@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import logo from "./singledrop.jpg"
 function Header() {
     return (
         <Navbar bg="light" expand="lg">
@@ -13,7 +13,7 @@ function Header() {
                     <Nav className="me-auto">
                         <ul style={{ listStyle: "none", height: "100vh" }}>
                             <li>
-                                <Navbar.Brand href="/">Simple Calculator</Navbar.Brand>
+                                <Navbar.Brand href="/"><img src={logo} style={{ height: "30px", width: "30px" }} /></Navbar.Brand>
                             </li>
                             <li>
                                 <Nav.Link href="/allData">All Rain Data</Nav.Link>

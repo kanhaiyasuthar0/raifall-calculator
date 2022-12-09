@@ -68,7 +68,7 @@ const ProjectData = ({ }) => {
         <Row >
             {/* <Header /> */}
 
-            <Col lg={3}>
+            <Col lg={2}>
                 <Header />
             </Col>
             <Col lg={9} className="main">
