@@ -98,7 +98,7 @@ const ProjectData = ({ }) => {
                         onChange={(e) => setType(e.target.value)}
                     >
                         <FormControlLabel value={1} control={<Radio />} label="1 - Good" />
-                        <FormControlLabel value={2} control={<Radio />} label="2 - Averunit" />
+                        <FormControlLabel value={2} control={<Radio />} label="2 - Average" />
                         <FormControlLabel value={3} control={<Radio />} label="3 - Bad" />
                     </RadioGroup>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-evenly", width: "100%" }}>

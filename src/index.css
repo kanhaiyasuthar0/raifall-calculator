@@ -43,3 +43,7 @@ code {
   background-color: red;
   color: white;
 }
+
+td {
+  text-transform: capitalize !important;
+}

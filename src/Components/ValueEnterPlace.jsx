@@ -187,13 +187,12 @@ const ValueEnterPlace = () => {
                         <Button type='' variant="contained" onClick={submit} color="success">  Add
                         </Button>
                         <Button variant="contained" disabled={userData?.no_of_year == allRainfallData.length ? false : true} onClick={saveit} color="error">  Save to cloud
-                        </Button>
+                        </Button><Button>{userData?.no_of_year} no of entries</Button>
                     </div>
                 </form>
 
 
                 <div style={{ margin: "auto", width: "fit-content" }}>
-
                     {allRainfallData.length > 0 ? <TableForUse data={allRainfallData} handleDelete={handleDelete} /> : ""}
                 </div>
             </Col>
