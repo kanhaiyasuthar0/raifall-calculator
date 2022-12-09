@@ -12,7 +12,6 @@ import TableData from './TableData'
 import TableForUse from './TableForUse'
 import YearVal from './YearVal'
 
-
 const ValueEnterPlace = () => {
     const [isLoading, setLoading] = useState(false)
 
@@ -85,6 +84,7 @@ const ValueEnterPlace = () => {
             setData([...arr])
             console.log(arr, "ARRR")
             MakeDataForAdd(userData, normal, arr)
+            localStorage.setItem("rainfall", JSON.stringify([]))
             navigate("/generateReport")
         }
 
@@ -186,7 +186,7 @@ const ValueEnterPlace = () => {
                     <div style={{ margin: "20px auto", display: "flex", justifyContent: "space-evenly", width: "500px" }}>
                         <Button type='' variant="contained" onClick={submit} color="success">  Add
                         </Button>
-                        <Button variant="contained" disabled={userData?.no_of_year == allRainfallData.length ? false : false} onClick={saveit} color="error">  Save to cloud
+                        <Button variant="contained" disabled={userData?.no_of_year == allRainfallData.length ? false : true} onClick={saveit} color="error">  Save to cloud
                         </Button>
                     </div>
                 </form>

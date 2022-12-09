@@ -27,8 +27,19 @@ code {
 
 }
 
-.main {
-  background: url("./Components/bg.jpg");
+.main {}
+
+.navbarbg {
+  background: url("./Components/many.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.deletebtn {
+  color: red;
+}
+
+.deletebtn:hover {
+  background-color: red;
+  color: white;
 }

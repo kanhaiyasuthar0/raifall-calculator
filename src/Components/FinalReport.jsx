@@ -205,14 +205,14 @@ const FinalReport = () => {
                     <tbody>
                         <tr>
                             <td colSpan="2" style={{ border: "1px solid", fontWeight: 600, textAlign: "left" }}>Area </td>
-                            <td colSpan="1" style={{ border: "1px solid", textAlign: "left" }}>{+finalData.area.value * +finalData.area.unit} Sq.m</td>
+                            <td colSpan="1" style={{ border: "1px solid", textAlign: "left" }}>{(+finalData.area.value * +finalData.area.unit) / 10000} Hectre</td>
                         </tr>
                         <tr>
                             <td colSpan="2" style={{ border: "1px solid", fontWeight: 600, textAlign: "left" }}>Type of Catchment -</td>
                             <td style={{ border: "1px solid", textAlign: "left" }}>{finalData.catchment.value == 1 ? "Good" : finalData.catchment.value == 2 ? "Average" : finalData.catchment.value == 3 ? "Bad" : ""}</td>
                         </tr>
                         {viewDataLocal.dependability?.map((depend, index) => {
-                            return (depend.status ? <tr>
+                            return (depend.status ? <tr style={{ border: "0.5px solid" }}>
 
                                 <td colSpan="2" style={{ fontWeight: 600, textAlign: "left" }}>Yield at {+depend.at}% Dependabilty </td>
                                 <td colSpan="1" style={{}}>{((+depend.value).toFixed(4))} Mcum</td>

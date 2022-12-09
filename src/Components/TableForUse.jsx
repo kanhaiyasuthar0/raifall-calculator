@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const TableForUse = ({ data, handleDelete }) => {
 
@@ -21,7 +22,7 @@ const TableForUse = ({ data, handleDelete }) => {
                             <th key={index} style={{ textTransform: 'capitalize', border: "1px solid" }}>{item}</th>
                         )
                     })}
-                    <th>Delete</th>
+                    <th style={{ border: "1px solid", color: "red" }}>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +32,7 @@ const TableForUse = ({ data, handleDelete }) => {
                             return (<td key={indexi} style={{ textTransform: 'capitalize', border: "1px solid" }}>{item[each]}</td>
                             )
                         })}
-                        <td onClick={() => handleDelete(item)}>Delete</td>
+                        <td className='deletebtn' style={{ border: "1px solid", cursor: "pointer" }} onClick={() => handleDelete(item)}><RemoveCircleIcon /></td>
 
                     </tr>)
                 })}

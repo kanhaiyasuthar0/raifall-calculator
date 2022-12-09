@@ -46,7 +46,7 @@ const Graph = () => {
                     <ReferenceLine y={max} label="Max rainfall" stroke="green" />
                     <ReferenceLine y={min} label="Min rainfall" stroke="red" />
                     {/* <Line type="monotone" dataKey="year" stroke="#8884d8" /> */}
-                    <Line type="monotone" dataKey="rainfall" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="rainfall" stroke="blue" />
                 </LineChart>
             </Col>
 

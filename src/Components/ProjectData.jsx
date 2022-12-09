@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
 import Header from './Navbar';
-import { Col, Row } from 'react-bootstrap';
+import { Alert, Col, Row } from 'react-bootstrap';
 const ProjectData = ({ }) => {
     const navigate = useNavigate()
     const [projectDetails, setProjectDetails] = useState({
@@ -24,6 +24,7 @@ const ProjectData = ({ }) => {
 
 
     const [unit, setunit] = React.useState('');
+    const [alert, setAlert] = React.useState(null);
 
     const handleChange = (event) => {
         setunit(event.target.value);
@@ -49,20 +50,26 @@ const ProjectData = ({ }) => {
         setProjectDetails({ ...projectDetails, [e.target.name]: e.target.value })
     }
     const SubmitUserData = () => {
-        let obj = {
-            user_name: projectDetails.user_name,
-            project_name: projectDetails.project_name,
-            area: projectDetails.area,
-            unit: unit,
-            no_of_year: projectDetails.no_of_year,
-            type: type,
-            dependability: [no50, no75, no90]
+        console.log(projectDetails)
+        if (projectDetails.user_name && projectDetails.project_name && projectDetails.area && unit && projectDetails.no_of_year) {
+            let obj = {
+                user_name: projectDetails.user_name,
+                project_name: projectDetails.project_name,
+                area: projectDetails.area,
+                unit: unit,
+                no_of_year: projectDetails.no_of_year,
+                type: type,
+                dependability: [no50, no75, no90]
+            }
+            localStorage.setItem("userData", JSON.stringify(obj))
+            setCompleteUserData({
+                ...obj
+            })
+            setAlert(null)
+            navigate("/rainfallValue")
+        } else {
+            setAlert({ type: "danger", message: "Please provide all the details" })
         }
-        localStorage.setItem("userData", JSON.stringify(obj))
-        setCompleteUserData({
-            ...obj
-        })
-        navigate("/rainfallValue")
     }
     return (
         <Row >
@@ -73,7 +80,9 @@ const ProjectData = ({ }) => {
             </Col>
             <Col lg={9} className="main">
 
-
+                {alert ? <Alert key={alert.type} variant={alert.type}>
+                    {alert.message}
+                </Alert> : ""}
                 <div style={{ display: "flex", flexDirection: "column", width: "100%", margin: "auto", }}>
                     <TextField onChange={handleData} value={projectDetails.user_name} name={"user_name"} className='uname' type={"text"} id="uname" label="Please Enter Your Full Name Here .." variant="standard" />
                     <TextField onChange={handleData} value={projectDetails.project_name} name={"project_name"} className='pname' type={"text"} id="pname" label="Project Name" variant="standard" />
@@ -94,7 +103,7 @@ const ProjectData = ({ }) => {
                     </RadioGroup>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-evenly", width: "100%" }}>
 
-                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
 
                             <TextField value={projectDetails.area} onChange={(e) => handleData(e)} style={{ width: "80%" }} name="area" className='area' type={"number"} id="area" label="Area" variant="standard" />
                             <div>  <InputLabel id="demo-simple-select-label">Unit</InputLabel>

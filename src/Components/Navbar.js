@@ -6,20 +6,20 @@ import logo from "./singledrop.jpg"
 function Header() {
     return (
         <Navbar bg="light" expand="lg">
-            <Container>
+            <Container className='navbarbg'>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <ul style={{ listStyle: "none", height: "100vh" }}>
                             <li>
-                                <Navbar.Brand href="/"><img src={logo} style={{ height: "30px", width: "30px" }} /></Navbar.Brand>
+                                <Navbar.Brand href="/">Home</Navbar.Brand>
                             </li>
                             <li>
-                                <Nav.Link href="/allData">All Rain Data</Nav.Link>
+                                <Nav.Link href="/allData">All rain data</Nav.Link>
                             </li>
                             <li>
-                                <Nav.Link href="/projectData">New Entry</Nav.Link>
+                                <Nav.Link href="/projectData">New entry</Nav.Link>
                             </li>
                         </ul>
                         {/* <Nav.Link href="/projectData">Project Data</Nav.Link> */}
