@@ -1,6 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
-const TableData = ({ setStrtable }) => {
+const TableData = ({ setStrtable, StrengthTable }) => {
     const [data, setData] = useState([
         { 20: { "good": 0.016, "avg": 0.012, "bad": 0.08 } },
         { 40: { "good": 0.016, "avg": 0.012, "bad": 0.08 } },
@@ -66,7 +67,8 @@ const TableData = ({ setStrtable }) => {
         // console.log(i)
         let first = str1[i].trim().split(" ")
         // console.log(first)
-        obj[first[0]] = {
+        obj = {
+            value: first[0],
             good: first[1],
             average: first[2],
             bad: first[3],
@@ -308,19 +310,34 @@ const TableData = ({ setStrtable }) => {
     for (let i = 0; i < str2.length; i += 4) {
         let obj = {};
         // console.log(str2[i])
-        let val = { "good": str2[i + 1].trim(), "average": str2[i + 2].trim(), "bad": str2[i + 3].trim() }
-        obj[str2[i].trim()] = val;
+        obj = { value: str2[i].trim(), "good": str2[i + 1].trim(), "average": str2[i + 2].trim(), "bad": str2[i + 3].trim() }
+
         arr2.push(obj)
     }
     // console.log(arr2)
     let strengthTable = [...arr1, ...arr2]
     localStorage.setItem("strengthTable", JSON.stringify(strengthTable))
+    async function post() {
+        let Data = {
+            name: "StrangeTable",
+            data: [...strengthTable]
+        }
+        console.log(Data)
+        try {
+            let res = await axios.post("http://localhost:8000/strangetable", Data);
+            console.log(res)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // post()
     useState(() => {
         setStrtable([...strengthTable])
     }, [])
     return (
         <div>
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Strange table</button>
+            {/* <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Strange table</button> */}
 
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
@@ -340,14 +357,15 @@ const TableData = ({ setStrtable }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {strengthTable?.map((item, index) => {
+                            {StrengthTable ? StrengthTable.map((item, index) => {
+                                // console.log(item[index])
                                 return (<tr>
-                                    <td>{((index + 1) * 20)}</td>
-                                    <td>{item[((index + 1) * 20)].good}</td>
-                                    <td>{item[((index + 1) * 20)].average}</td>
-                                    <td>{item[((index + 1) * 20)].bad}</td>
+                                    <td>{item.value}</td>
+                                    <td>{item.good}</td>
+                                    <td>{item.average}</td>
+                                    <td>{item.bad}</td>
                                 </tr>)
-                            })}
+                            }) : ""}
                         </tbody>
                     </table>
                 </div>

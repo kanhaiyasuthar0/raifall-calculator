@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Add, check } from './common'
-import Loader from './Loader'
 import Header from './Navbar'
 
 import TableData from './TableData'
@@ -12,9 +11,7 @@ import TableForUse from './TableForUse'
 import YearVal from './YearVal'
 
 
-const ValueEnterPlace = () => {
-    const [isLoading, setLoading] = useState(false)
-
+const EditRainData = ({ RainDataToEdit }) => {
     let userData = JSON.parse(localStorage.getItem("userData"))
     const [data1, setData] = useState([])
     const [year, setYear] = useState("")
@@ -105,23 +102,23 @@ const ValueEnterPlace = () => {
         return (c2 - v1).toFixed(5)
     }
 
-    function getData(value, data) {
-        console.log(value, data)
-        for (let i = 0; i < data.length; i++) {
-            console.log(data[i], i, value, data[i]["dependability"])
-            if (data[i]["dependability"] == value) {
+    function getData(value) {
+        // console.log(value)
+        for (let i = 0; i < data1.length; i++) {
+            console.log(data1[i], i, value, data1[i]["dependability"])
+            if (data1[i]["dependability"] == value) {
                 // console.log("got the value", value)
-                return data[i]["yield"]
-            } else if (data[i]["dependability"] == value) {
+                return data1[i]["yield"]
+            } else if (data1[i]["dependability"] == value) {
                 // console.log("got the value", value)
-                return data[i]["yield"]
-            } else if (data[i]["dependability"] == value) {
+                return data1[i]["yield"]
+            } else if (data1[i]["dependability"] == value) {
                 // console.log("got the value", value)
-                return data[i]["yield"]
-            } else if (+data[i]["dependability"] < +value, data[i + 1] ? +data[i + 1]["dependability"] > +value : false) {
+                return data1[i]["yield"]
+            } else if (+data1[i]["dependability"] < +value, data1[i + 1] ? +data1[i + 1]["dependability"] > +value : false) {
                 // console.log("got the value", value, data1[i + 1], data1[i])
                 // console.log("YES")
-                return interpolDepend(data[i]["dependability"], data[i + 1]["dependability"], data[i]["yield"], data[i + 1]["yield"], value)
+                return interpolDepend(data1[i]["dependability"], data1[i + 1]["dependability"], data1[i]["yield"], data1[i + 1]["yield"], value)
             }
         }
         let ans = 0;
@@ -143,18 +140,17 @@ const ValueEnterPlace = () => {
             },
             totalnoofyeardata: userData.no_of_year,
             dependability: [
-                { value: getData(userData.dependability[0].value, data), status: userData.dependability[0].status, at: userData.dependability[0].value },
-                { value: getData(userData.dependability[1].value, data), status: userData.dependability[1].status, at: userData.dependability[1].value },
-                { value: getData(userData.dependability[2].value, data), status: userData.dependability[2].status, at: userData.dependability[2].value }
+                { value: getData(userData.dependability[0].value), status: userData.dependability[0].status, at: userData.dependability[0].value },
+                { value: getData(userData.dependability[1].value), status: userData.dependability[1].status, at: userData.dependability[1].value },
+                { value: getData(userData.dependability[2].value), status: userData.dependability[2].status, at: userData.dependability[2].value }
             ]
             ,
             userEntered: [...normal],
             data: [...data]
         }
 
-        setLoading(true)
+
         Add(DataFinal)
-        setLoading(false)
         localStorage.setItem("viewData", JSON.stringify(DataFinal))
     }
 
@@ -167,7 +163,6 @@ const ValueEnterPlace = () => {
     }, [])
     return (
         <div>
-            {isLoading ? <Loader /> : ""}
             <Header />
 
             <form>
@@ -187,11 +182,11 @@ const ValueEnterPlace = () => {
 
             <div style={{ margin: "auto", width: "fit-content" }}>
 
-                {allRainfallData.length > 0 ? <TableForUse data={allRainfallData} handleDelete={handleDelete} /> : ""}
+                {RainDataToEdit.length > 0 ? <TableForUse data={RainDataToEdit} handleDelete={handleDelete} /> : ""}
             </div>
 
         </div>
     )
 }
 
-export default ValueEnterPlace
+export default EditRainData

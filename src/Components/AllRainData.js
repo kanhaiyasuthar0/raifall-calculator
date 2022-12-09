@@ -2,25 +2,74 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Result from './Result'
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Loader from './Loader';
+import Accordion1 from './Accordion';
+import Header from './Navbar';
 
-const AllRainData = ({ setEnteredval }) => {
+const AllRainData = ({ setRainDataToEdit }) => {
+    const [isLoading, setLoading] = useState(false)
     const [allData, setAllData] = useState([])
+    const [allReportData, setAllReportData] = useState([])
     const [each, setEach] = useState([])
     const navigate = useNavigate()
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     async function getAllDataFrombackndRainFall() {
+        setLoading(true)
+
         try {
             let res = await axios.get("https://rainfall.onrender.com/rainAll");
-            // let res2 = await res.json();
-            console.log(res.data)
-            // console.log(res2)
-            setAllData([...res.data])
+            // setAllData([...res.data])
+
+            setLoading(false)
+
         } catch (error) {
             console.log(error)
+            setLoading(false)
+        }
+    }
+    async function getAllDataFromBackend() {
+        setLoading(true)
+        try {
+            let res = await axios.get("https://rainfall.onrender.com/all");
+            console.log(res.data)
+            setAllData([...res.data])
+
+            // setAllReportData([...res.data])
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
         }
 
     }
+
+    // async function getAllDataFrombackndRainFall() {
+
+
+    // }
+
+    const updateRainDataEdit = async (data) => {
+        setLoading(true)
+        try {
+            let res = await axios.put("https://rainfall.onrender.com/updateRain", data);
+            // let res2 = await res.json();
+            setAllData([...res.data])
+            setLoading(false)
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
     function handleEdit(data) {
         // console.log(data)
+        // console.log(data, "EDIT")
         let arr = []
         for (let i = 0; i < data.length; i++) {
             let obj = {};
@@ -29,33 +78,46 @@ const AllRainData = ({ setEnteredval }) => {
             arr.push(obj)
             console.log(obj)
         }
+        console.log(arr)
         localStorage.setItem("rainfall", JSON.stringify(arr))
-        // setEnteredval([...arr])
+        setRainDataToEdit([...arr])
         navigate("/projectData")
     }
     const openView = (data) => {
         setEach([...data.data])
     }
     useEffect(() => {
-        getAllDataFrombackndRainFall()
+        // getAllDataFrombackndRainFall()
+        getAllDataFromBackend()
     }, [])
     return (
         <div>
+
+            {isLoading ? <Loader /> : ""}
+            <Header />
             <table style={{ border: "1px solid", margin: "auto", width: "500px" }}>
                 <thead>
                     <tr style={{ border: "1px solid", borderRadius: "10px" }}>
                         <th style={{ border: "1px solid", borderRadius: "10px" }}>id</th>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>Name</th>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>Data</th>
+                        <th style={{ border: "1px solid", borderRadius: "10px" }}>Project Name</th>
+                        <th style={{ border: "1px solid", borderRadius: "10px" }}>User Name</th>
+                        <th style={{ border: "1px solid", borderRadius: "10px" }}>Created on</th>
+                        <th style={{ border: "1px solid", borderRadius: "10px" }}>More detail</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {allData?.map((item) => {
+                    {allData?.map((item, index) => {
                         return (
-                            <tr>
+                            <tr key={index}>
                                 <td style={{ border: "1px solid", borderRadius: "10px" }}>{item._id}</td>
-                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.name}</td>
-                                <td style={{ textOverflow: "ellipsis", border: "1px solid", borderRadius: "10px" }} onClick={() => openView(item)}><button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">View</button></td>
+                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.projectname}</td>
+                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.username}</td>
+                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.createdAt}</td>
+                                <td style={{ border: "1px solid", borderRadius: "10px" }}><Accordion1 data={item} index={index} handleEdit={handleEdit} /></td>
+                                {/* <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.catchment}</td> */}
+                                {/* <td style={{ textOverflow: "ellipsis", border: "1px solid", borderRadius: "10px" }} onClick={() => openView(item)}><Button variant="primary" onClick={handleShow}>
+                                    View
+                                </Button></td> */}
                             </tr>
                         )
                     })}
@@ -64,14 +126,17 @@ const AllRainData = ({ setEnteredval }) => {
 
 
 
-            {/* <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> */}
+            {/* <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> */}
 
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
+
+
+
+
+            <Offcanvas show={show} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Strange table</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
                     <button onClick={() => handleEdit(each)} className='btn btn-secondary'>Edit</button>
 
                     <table className='strtable'>
@@ -87,7 +152,7 @@ const AllRainData = ({ setEnteredval }) => {
                         <tbody>
                             {each?.map((item, index) => {
                                 // console.log(item)
-                                return (<tr>
+                                return (<tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{item.year}</td>
                                     <td>{item.rainfall}</td>
@@ -96,12 +161,9 @@ const AllRainData = ({ setEnteredval }) => {
                             })}
                         </tbody>
                     </table>
-
-
-                </div>
-            </div>
-
-        </div>
+                </Offcanvas.Body>
+            </Offcanvas>
+        </div >
     )
 }
 

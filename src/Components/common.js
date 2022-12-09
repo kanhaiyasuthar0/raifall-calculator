@@ -1,41 +1,44 @@
-let StrengthTable = JSON.parse(localStorage.getItem("strengthTable"))
+import axios from "axios"
+
+// let StrengthTable = JSON.parse(localStorage.getItem("strengthTable"))
 let rainfall = JSON.parse(localStorage.getItem("rainfall"))
 let userData = JSON.parse(localStorage.getItem("userData"))
 let type = userData ? userData.type : ""
 
 //checking strange table
-export const check = (value) => {
-    console.log(value, "VALLLUE", typeof value)
+export const check = (value, StrengthTable) => {
+    // console.log(value, "VALLLUE", StrengthTable)
     value = +value
-    console.log(StrengthTable)
+    // console.log(StrengthTable)
     for (let i = 0; i < StrengthTable.length; i++) {
-        console.log(StrengthTable, "STRENGTHTABEL")
+        // console.log(StrengthTable, "STRENGTHTABEL")
         if (+value == [((i + 1) * 20)]) {
-            console.log(StrengthTable[i][value], "VALUE")
+            // console.log(StrengthTable[i][value], "VALUE")
             if (type == 1) {
-                return (StrengthTable[i][value].good)
+                return (StrengthTable[i].good)
             } else if (type == 2) {
-                return (StrengthTable[i][value].average)
+                return (StrengthTable[i].average)
             } else {
-                return (StrengthTable[i][value].bad)
+                return (StrengthTable[i].bad)
             }
         } else if (+value > [((i + 1) * 20)] && +value < [((i + 2) * 20)]) {
 
-            console.log(StrengthTable[i], StrengthTable[i + 1])
+            // console.log(StrengthTable[i], StrengthTable[i + 1])
             let item1 = StrengthTable[i]
             let item2 = StrengthTable[i + 1]
-            let obj1 = Object.values(item1)
-            let obj2 = Object.values(item2);
-            let ob1val = Object.keys(item1)[0]
-            let ob2val = Object.keys(item2)[0]
-            let c1 = type == 1 ? obj1[0].good : type == 2 ? obj1[0].average : type == 3 ? obj1[0].bad : 0
-            let c2 = type == 1 ? obj2[0].good : type == 2 ? obj2[0].average : type == 3 ? obj2[0].bad : 0;
-
-
+            // let obj1 = Object.values(item1)
+            // let obj2 = Object.values(item2);
+            let ob1val = item1.value
+            let ob2val = item2.value
+            let c1 = type == 1 ? item1.good : type == 2 ? item1.average : type == 3 ? item1.bad : 0
+            let c2 = type == 1 ? item2.good : type == 2 ? item2.average : type == 3 ? item2.bad : 0;
+            console.log(c1, c2, ob1val, ob2val, +value, "VALLL")
             return interpolar(c1, c2, ob1val, ob2val, +value)
         }
     }
 }
+
+
 
 
 //interpolar
@@ -44,8 +47,8 @@ const interpolar = (c1, c2, ob1val, ob2val, mainVal) => {
     // let obj2 = Object.values(item2);
     // let ob1val = Object.keys(item1)[0]
     // let ob2val = Object.keys(item2)[0]
-    // let c1 = type == 1 ? obj1[0].good : type == 2 ? obj1[0].average : type == 3 ? obj1[0].bad : 0
-    // let c2 = type == 1 ? obj2[0].good : type == 2 ? obj2[0].average : type == 3 ? obj2[0].bad : 0;
+    // let c1 = type == 1 ? item1.good : type == 2 ? item1.average : type == 3 ? item1.bad : 0
+    // let c2 = type == 1 ? item2.good : type == 2 ? item2.average : type == 3 ? item2.bad : 0;
     // console.log(c1, c2, ob1val, ob2val, mainVal)
     let upper = ob2val - ob1val
     let lower = ob2val - mainVal
@@ -54,4 +57,15 @@ const interpolar = (c1, c2, ob1val, ob2val, mainVal) => {
     // console.log(upper, lower, u2, l2)
     let v1 = lower / upper * u2
     return (c2 - v1).toFixed(4)
+}
+
+
+export const Add = async (DataToAdd) => {
+    try {
+        let res = await axios.post("https://rainfall.onrender.com/add", DataToAdd);
+        return res
+
+    } catch (error) {
+        console.log(error)
+    }
 }

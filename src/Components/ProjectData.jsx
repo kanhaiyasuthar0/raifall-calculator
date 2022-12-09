@@ -10,7 +10,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
-const ProjectData = ({ handleUserData, setArea, setnoYear, generateReport }) => {
+import Header from './Navbar';
+const ProjectData = ({ }) => {
     const navigate = useNavigate()
     const [projectDetails, setProjectDetails] = useState({
         user_name: "",
@@ -27,9 +28,9 @@ const ProjectData = ({ handleUserData, setArea, setnoYear, generateReport }) => 
         setunit(event.target.value);
     };
 
-    const [no90, set90] = useState({ value: 90, status: false })
-    const [no75, set75] = useState({ value: 75, status: false })
     const [no50, set50] = useState({ value: 50, status: false })
+    const [no75, set75] = useState({ value: 75, status: false })
+    const [no90, set90] = useState({ value: 90, status: false })
     const [type, setType] = useState(1)
 
     function handleDepend(e) {
@@ -54,7 +55,7 @@ const ProjectData = ({ handleUserData, setArea, setnoYear, generateReport }) => 
             unit: unit,
             no_of_year: projectDetails.no_of_year,
             type: type,
-            dependability: [no90, no75, no50]
+            dependability: [no50, no75, no90]
         }
         localStorage.setItem("userData", JSON.stringify(obj))
         setCompleteUserData({
@@ -64,6 +65,7 @@ const ProjectData = ({ handleUserData, setArea, setnoYear, generateReport }) => 
     }
     return (
         <>
+            <Header />
             <div style={{ display: "flex", flexDirection: "column", width: "100%", margin: "auto" }}>
                 <TextField onChange={handleData} value={projectDetails.user_name} name={"user_name"} className='uname' type={"text"} id="uname" label="Please Enter Your Full Name Here .." variant="standard" />
                 <TextField onChange={handleData} value={projectDetails.project_name} name={"project_name"} className='pname' type={"text"} id="pname" label="Project Name" variant="standard" />
@@ -111,10 +113,10 @@ const ProjectData = ({ handleUserData, setArea, setnoYear, generateReport }) => 
                 <FormControlLabel
                     value="top"
                     control={<Checkbox />}
-                    label="90%"
+                    label="50%"
                     labelPlacement="top"
                     onChange={handleDepend}
-                    name="90"
+                    name="50"
                 />
                 <FormControlLabel
                     value="top"
@@ -127,10 +129,10 @@ const ProjectData = ({ handleUserData, setArea, setnoYear, generateReport }) => 
                 <FormControlLabel
                     value="top"
                     control={<Checkbox />}
-                    label="50%"
+                    label="90%"
                     labelPlacement="top"
                     onChange={handleDepend}
-                    name="50"
+                    name="90"
                 />
             </div>
 
