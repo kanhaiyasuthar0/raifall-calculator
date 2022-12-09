@@ -1,4 +1,4 @@
-import { styled } from "@material-ui/styles";
+import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import React from 'react'
 import { Col, Row } from "react-bootstrap";
