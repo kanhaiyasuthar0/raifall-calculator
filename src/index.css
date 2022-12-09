@@ -26,3 +26,9 @@ code {
   margin: 1px 10px;
 
 }
+
+.main {
+  background: url("./Components/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

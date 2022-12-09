@@ -7,16 +7,19 @@ function Header() {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                {/* <Navbar.Brand href="#home"></Navbar.Brand> */}
+
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <ul style={{ listStyle: "none", height: "100vh" }}>
                             <li>
+                                <Navbar.Brand href="/">Simple Calculator</Navbar.Brand>
+                            </li>
+                            <li>
                                 <Nav.Link href="/allData">All Rain Data</Nav.Link>
                             </li>
                             <li>
-                                <Nav.Link href="/projectData">Project Data</Nav.Link>
+                                <Nav.Link href="/projectData">New Entry</Nav.Link>
                             </li>
                         </ul>
                         {/* <Nav.Link href="/projectData">Project Data</Nav.Link> */}

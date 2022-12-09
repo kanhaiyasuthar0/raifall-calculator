@@ -71,10 +71,10 @@ const ProjectData = ({ }) => {
             <Col lg={3}>
                 <Header />
             </Col>
-            <Col lg={6}>
+            <Col lg={9} className="main">
 
 
-                <div style={{ display: "flex", flexDirection: "column", width: "100%", margin: "auto" }}>
+                <div style={{ display: "flex", flexDirection: "column", width: "100%", margin: "auto", }}>
                     <TextField onChange={handleData} value={projectDetails.user_name} name={"user_name"} className='uname' type={"text"} id="uname" label="Please Enter Your Full Name Here .." variant="standard" />
                     <TextField onChange={handleData} value={projectDetails.project_name} name={"project_name"} className='pname' type={"text"} id="pname" label="Project Name" variant="standard" />
                 </div>
