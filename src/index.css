@@ -47,3 +47,13 @@ code {
 td {
   text-transform: capitalize !important;
 }
+
+.tablegraph th,
+.tablegraph td {
+  border: 1px solid;
+
+}
+
+.tablegraph {
+  margin: 50px auto;
+}

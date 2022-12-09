@@ -16,6 +16,7 @@ import Header from './Navbar';
 
 const Graph = () => {
     let data = JSON.parse(localStorage.getItem("rainfall"))
+    let userData = JSON.parse(localStorage.getItem("userData"))
     let max = JSON.parse(localStorage.getItem("max"))
     let min = JSON.parse(localStorage.getItem("min"))
     console.log(max, min)
@@ -48,6 +49,25 @@ const Graph = () => {
                     {/* <Line type="monotone" dataKey="year" stroke="#8884d8" /> */}
                     <Line type="monotone" dataKey="rainfall" stroke="blue" />
                 </LineChart>
+
+                <div>
+                    <table className='tablegraph'>
+                        <tbody>
+                            <tr>
+                                <th>Location</th>
+                                <th>Area</th>
+                                <th>Catchment type</th>
+                                <th>No of year's data</th>
+                            </tr>
+                            <tr>
+                                <td>{userData.project_name}</td>
+                                <td>{+userData.area * +userData.unit / 10000} Hect</td>
+                                <td>{userData.type == 1 ? "Good" : data.type == 2 ? "Average" : data.type == 3 ? "Bad" : ""}</td>
+                                <td>{userData.no_of_year}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </Col>
 
         </Row>

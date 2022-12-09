@@ -78,7 +78,7 @@ const ProjectData = ({ }) => {
             <Col lg={2}>
                 <Header />
             </Col>
-            <Col lg={9} className="main">
+            <Col lg={6} className="main" style={{ margin: "auto" }}>
 
                 {alert ? <Alert key={alert.type} variant={alert.type}>
                     {alert.message}
@@ -103,9 +103,9 @@ const ProjectData = ({ }) => {
                     </RadioGroup>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-evenly", width: "100%" }}>
 
-                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
+                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
 
-                            <TextField value={projectDetails.area} onChange={(e) => handleData(e)} style={{ width: "80%" }} name="area" className='area' type={"number"} id="area" label="Area" variant="standard" />
+                            <TextField value={projectDetails.area} onChange={(e) => handleData(e)} style={{ width: "100%" }} name="area" className='area' type={"number"} id="area" label="Area" variant="standard" />
                             <div>  <InputLabel id="demo-simple-select-label">Unit</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -120,7 +120,7 @@ const ProjectData = ({ }) => {
                                     {/* <MenuItem value={30}>Thirty</MenuItem> */}
                                 </Select>     </div>
                         </div>
-                        <TextField value={projectDetails.no_of_year} onChange={(e) => handleData(e)} name="no_of_year" className='year' type={"number"} id="year" label="Total No. of years for which rainfall data is available" variant="standard" />
+                        <TextField style={{ width: "100%" }} value={projectDetails.no_of_year} onChange={(e) => handleData(e)} name="no_of_year" className='year' type={"number"} id="year" label="Total No. of years for which rainfall data is available" variant="standard" />
                     </div>
                 </div>
 
