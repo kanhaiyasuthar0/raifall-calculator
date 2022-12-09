@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 
-function Accordion1({ data, index, handleEdit }) {
+function Accordion1({ data, index, handleEdit, handleGraph }) {
     console.log(data)
     return (
         <Accordion defaultActiveKey="0">
@@ -10,6 +10,7 @@ function Accordion1({ data, index, handleEdit }) {
                 </Accordion.Header>
                 <Accordion.Body>
                     <Button onClick={() => handleEdit(data?.userEntered)}>Edit</Button>
+                    <Button onClick={() => handleGraph(data?.userEntered)}>Graph</Button>
                     <table style={{ border: "1px solid", margin: "auto", width: "500px" }}>
                         <thead>
                             <tr style={{ border: "1px solid", borderRadius: "10px" }}>

@@ -11,8 +11,14 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/allData">All Rain Data</Nav.Link>
-                        <Nav.Link href="/projectData">Project Data</Nav.Link>
+                        <ul style={{ listStyle: "none", height: "100vh" }}>
+                            <li>
+                                <Nav.Link href="/allData">All Rain Data</Nav.Link>
+                            </li>
+                            <li>
+                                <Nav.Link href="/projectData">Project Data</Nav.Link>
+                            </li>
+                        </ul>
                         {/* <Nav.Link href="/projectData">Project Data</Nav.Link> */}
                         {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

@@ -2,6 +2,7 @@ import { Button, FormControlLabel, Switch, TextField } from '@mui/material'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { Add, check } from './common'
 import Loader from './Loader'
@@ -35,6 +36,7 @@ const ValueEnterPlace = () => {
         if (auto) {
             setYear((prev) => +prev + 1)
         }
+        setRainfall("")
     }
     const columns = [
         { field: 'year', headerName: 'ID', width: 70 },
@@ -166,31 +168,36 @@ const ValueEnterPlace = () => {
         }
     }, [])
     return (
-        <div>
+        <Row>
             {isLoading ? <Loader /> : ""}
-            <Header />
 
-            <form>
-                <div style={{ display: "flex", width: "50%", justifyContent: "space-evenly", margin: "auto" }} >
-                    <FormControlLabel control={<Switch onChange={() => setAuto(!auto)} value={auto ? true : false} />} label="Auto increment year?" />
-                    <TextField id="eyear" value={year} name='year' onChange={handleYear} type={"number"} label="Year" variant="standard" />
-                    <TextField id="eval" value={rainfall} name='val' onChange={handleRainfall} type={"number"} label="Rainfall value in mm" variant="standard" />
+
+            <Col lg={3}>
+                <Header />
+            </Col>
+            <Col lg={7}>
+
+                <form>
+                    <div style={{ display: "flex", width: "50%", justifyContent: "space-evenly", margin: "auto" }} >
+                        <FormControlLabel control={<Switch onChange={() => setAuto(!auto)} value={auto ? true : false} />} label="Auto increment year?" />
+                        <TextField style={{ width: "800px", marginRight: "20px" }} id="eyear" value={year} name='year' onChange={handleYear} type={"number"} label="Year" variant="standard" />
+                        <TextField style={{ width: "800px" }} id="eval" value={rainfall} name='val' onChange={handleRainfall} type={"number"} label="Rainfall value in mm" variant="standard" />
+                    </div>
+                    <div style={{ margin: "20px auto", display: "flex", justifyContent: "space-evenly", width: "500px" }}>
+                        <Button type='' variant="contained" onClick={submit} color="success">  Add
+                        </Button>
+                        <Button variant="contained" disabled={userData?.no_of_year == allRainfallData.length ? false : false} onClick={saveit} color="error">  Save to cloud
+                        </Button>
+                    </div>
+                </form>
+
+
+                <div style={{ margin: "auto", width: "fit-content" }}>
+
+                    {allRainfallData.length > 0 ? <TableForUse data={allRainfallData} handleDelete={handleDelete} /> : ""}
                 </div>
-                <div style={{ margin: "20px auto", display: "flex", justifyContent: "space-evenly", width: "500px" }}>
-                    <Button type='' variant="contained" onClick={submit} color="success">  Add
-                    </Button>
-                    <Button variant="contained" disabled={userData?.no_of_year == allRainfallData.length ? false : false} onClick={saveit} color="error">  Save to cloud
-                    </Button>
-                </div>
-            </form>
-
-
-            <div style={{ margin: "auto", width: "fit-content" }}>
-
-                {allRainfallData.length > 0 ? <TableForUse data={allRainfallData} handleDelete={handleDelete} /> : ""}
-            </div>
-
-        </div>
+            </Col>
+        </Row>
     )
 }
 

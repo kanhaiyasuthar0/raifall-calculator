@@ -7,6 +7,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Loader from './Loader';
 import Accordion1 from './Accordion';
 import Header from './Navbar';
+import { Col, Row } from 'react-bootstrap';
 
 const AllRainData = ({ setRainDataToEdit }) => {
     const [isLoading, setLoading] = useState(false)
@@ -83,6 +84,21 @@ const AllRainData = ({ setRainDataToEdit }) => {
         setRainDataToEdit([...arr])
         navigate("/projectData")
     }
+    function handleGraph(data) {
+        // console.log(data)
+        // console.log(data, "EDIT")
+        let arr = []
+        for (let i = 0; i < data.length; i++) {
+            let obj = {};
+            obj["year"] = data[i].year
+            obj["rainfall"] = data[i].rainfall
+            arr.push(obj)
+            console.log(obj)
+        }
+        localStorage.setItem("rainfall", JSON.stringify(arr))
+        setRainDataToEdit([...arr])
+        navigate("/graph")
+    }
     const openView = (data) => {
         setEach([...data.data])
     }
@@ -91,40 +107,47 @@ const AllRainData = ({ setRainDataToEdit }) => {
         getAllDataFromBackend()
     }, [])
     return (
-        <div>
+        <Row>
+
 
             {isLoading ? <Loader /> : ""}
-            <Header />
-            <table style={{ border: "1px solid", margin: "auto", width: "500px" }}>
-                <thead>
-                    <tr style={{ border: "1px solid", borderRadius: "10px" }}>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>id</th>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>Project Name</th>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>User Name</th>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>Created on</th>
-                        <th style={{ border: "1px solid", borderRadius: "10px" }}>More detail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {allData?.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item._id}</td>
-                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.projectname}</td>
-                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.username}</td>
-                                <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.createdAt}</td>
-                                <td style={{ border: "1px solid", borderRadius: "10px" }}><Accordion1 data={item} index={index} handleEdit={handleEdit} /></td>
-                                {/* <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.catchment}</td> */}
-                                {/* <td style={{ textOverflow: "ellipsis", border: "1px solid", borderRadius: "10px" }} onClick={() => openView(item)}><Button variant="primary" onClick={handleShow}>
+
+            <Col lg={2}>
+                <Header />
+            </Col>
+            <Col lg={9}>
+                <table style={{ border: "1px solid", margin: "auto", width: "500px" }}>
+                    <thead>
+                        <tr style={{ border: "1px solid", borderRadius: "10px" }}>
+                            <th style={{ border: "1px solid", borderRadius: "10px" }}>Created on</th>
+                            <th style={{ border: "1px solid", borderRadius: "10px" }}>Project Name</th>
+                            <th style={{ border: "1px solid", borderRadius: "10px" }}>User Name</th>
+                            <th style={{ border: "1px solid", borderRadius: "10px" }}>Area</th>
+                            {/* <th style={{ border: "1px solid", borderRadius: "10px" }}>Dependabilty</th> */}
+                            <th style={{ border: "1px solid", borderRadius: "10px" }}>More detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allData?.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.createdAt}</td>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.projectname}</td>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.username}</td>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.area.value * item.area.unit}</td>
+                                    {/* <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.dependability[0].}</td> */}
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}><Accordion1 data={item} index={index} handleEdit={handleEdit} handleGraph={handleGraph} /></td>
+                                    {/* <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.catchment}</td> */}
+                                    {/* <td style={{ textOverflow: "ellipsis", border: "1px solid", borderRadius: "10px" }} onClick={() => openView(item)}><Button variant="primary" onClick={handleShow}>
                                     View
                                 </Button></td> */}
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
 
-
+            </Col>
 
             {/* <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> */}
 
@@ -163,7 +186,8 @@ const AllRainData = ({ setRainDataToEdit }) => {
                     </table>
                 </Offcanvas.Body>
             </Offcanvas>
-        </div >
+
+        </Row >
     )
 }
 

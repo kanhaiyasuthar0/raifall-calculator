@@ -18,7 +18,10 @@ import ProjectData from './Components/ProjectData';
 import ValueEnterPlace from './Components/ValueEnterPlace';
 import FinalReport from './Components/FinalReport';
 import EditRainData from './Components/EditRainData';
+import Loader from './Components/Loader';
+import Graph from './Components/Graph';
 function App() {
+  const [loader, setLoader] = useState(false)
   let strangeTabled = JSON.parse(localStorage.getItem("strangeTable"))
   const [finalReport, setReport] = useState([])
   const [RainDataToEdit, setRainDataToEdit] = useState([])
@@ -134,12 +137,17 @@ function App() {
     return (c2 - v1).toFixed(4)
   }
   async function fetchStrangeTable() {
+    setLoader(true)
     try {
       let res = await axios.get("https://rainfall.onrender.com/strangetable");
       localStorage.setItem("strengthTable", JSON.stringify(res.data[0].data))
+      setLoader(false)
+
 
     } catch (error) {
       console.log(error)
+      setLoader(false)
+
     }
   }
 
@@ -148,7 +156,7 @@ function App() {
   }, [enteredval])
   return (
     <div className="App">
-
+      {loader ? <Loader /> : ""}
       <Routes>
         {/* <Route path="/report" element={<Result type={type} depend={depend} handleDepend={handleDepend} userData={userData} noArea={noArea} finalReport={finalReport} setReport={setReport} check={check} noYear={noYear} enteredval={enteredval} />} /> */}
         <Route path="/allData" element={<AllRainData setRainDataToEdit={setRainDataToEdit} />} />
@@ -160,6 +168,7 @@ function App() {
         <Route path="/projectData" element={<ProjectData />} />
         <Route path="/rainfallValue" element={<ValueEnterPlace />} />
         <Route path="/generateReport" element={<FinalReport />} />
+        <Route path="/graph" element={<Graph />} />
       </Routes>
 
       {/* {!strangeTabled ? <TableData StrengthTable={StrengthTable} setStrtable={setStrtable} interpolar={interpolar} setEnteredval={setEnteredval} enteredval={enteredval} handleChange={handleChange} submit={submit} /> : ""} */}
