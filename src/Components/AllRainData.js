@@ -88,13 +88,23 @@ const AllRainData = ({ setRainDataToEdit }) => {
         // console.log(data)
         // console.log(data, "EDIT")
         let arr = []
+        let max = 0
+        let min = 5000
         for (let i = 0; i < data.length; i++) {
+            if (max < data[i].rainfall) {
+                max = data[i].rainfall
+            }
+            if (min > data[i].rainfall) {
+                min = data[i].rainfall
+            }
             let obj = {};
             obj["year"] = data[i].year
             obj["rainfall"] = data[i].rainfall
             arr.push(obj)
             console.log(obj)
         }
+        localStorage.setItem("max", JSON.stringify(max))
+        localStorage.setItem("min", JSON.stringify(min))
         localStorage.setItem("rainfall", JSON.stringify(arr))
         setRainDataToEdit([...arr])
         navigate("/graph")
@@ -116,7 +126,7 @@ const AllRainData = ({ setRainDataToEdit }) => {
                 <Header />
             </Col>
             <Col lg={9}>
-                <table style={{ border: "1px solid", margin: "auto", width: "500px" }}>
+                <table style={{ border: "1px solid", margin: "auto", width: "70vw" }}>
                     <thead>
                         <tr style={{ border: "1px solid", borderRadius: "10px" }}>
                             <th style={{ border: "1px solid", borderRadius: "10px" }}>Created on</th>
@@ -131,7 +141,7 @@ const AllRainData = ({ setRainDataToEdit }) => {
                         {allData?.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.createdAt}</td>
+                                    <td style={{ border: "1px solid", borderRadius: "10px" }}>{new Date(item.createdAt).toDateString()}</td>
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.projectname}</td>
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.username}</td>
                                     <td style={{ border: "1px solid", borderRadius: "10px" }}>{item.area.value * item.area.unit}</td>

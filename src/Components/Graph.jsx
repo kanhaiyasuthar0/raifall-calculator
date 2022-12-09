@@ -16,7 +16,9 @@ import Header from './Navbar';
 
 const Graph = () => {
     let data = JSON.parse(localStorage.getItem("rainfall"))
-
+    let max = JSON.parse(localStorage.getItem("max"))
+    let min = JSON.parse(localStorage.getItem("min"))
+    console.log(max, min)
     return (
         // <ResponsiveContainer width="100%" height="100%">
         <Row>
@@ -40,8 +42,9 @@ const Graph = () => {
                     <YAxis dataKey="rainfall" />
                     <Tooltip />
                     <Legend />
-                    <ReferenceLine y="2000" stroke="red" label="" />
-                    {/* <ReferenceLine y={9800} label="Max" stroke="red" /> */}
+                    {/* <ReferenceLine y="2000" stroke="red" label="" /> */}
+                    <ReferenceLine y={max} label="Max rainfall" stroke="green" />
+                    <ReferenceLine y={min} label="Min rainfall" stroke="red" />
                     {/* <Line type="monotone" dataKey="year" stroke="#8884d8" /> */}
                     <Line type="monotone" dataKey="rainfall" stroke="#82ca9d" />
                 </LineChart>
